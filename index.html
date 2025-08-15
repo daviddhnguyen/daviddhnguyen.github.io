@@ -4,14 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David DH Nguyen's Portfolio</title>
-    <link type=""text/css" rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>UNDER CONSTRUCTION</h1>
-        <p>In the meantime visit my Github page for other projects: 
+    <header class="header">
+        <h1>David DH Nguyen's Portfolio</h1>
+        <p>Visit my Github for other projects: 
             <a href="https://github.com/daviddhnguyen">David's Github</a>
         </p>
-    </div>
+    </header>
+
+    <main>
+        <section class="blog">
+            <h2>Blog</h2>
+            <div id="blog-container">Loading blog posts...</div>
+        </section>
+    </main>
+
+    <!-- Markdown parser -->
+    <script src="marked.min.js"></script>
+    <script>
+        const posts = [
+            'posts/post1.md',
+            'posts/post2.md'
+        ];
+
+        const blogContainer = document.getElementById('blog-container');
+
+        async function loadPosts() {
+            blogContainer.innerHTML = '';
+            for (const post of posts) {
+                const response = await fetch(post);
+                const markdown = await response.text();
+                const html = marked.parse(markdown);
+
+                const postDiv = document.createElement('div');
+                postDiv.classList.add('blog-entry');
+                postDiv.innerHTML = html;
+
+                blogContainer.appendChild(postDiv);
+            }
+        }
+
+        loadPosts();
+    </script>
 </body>
 </html>
